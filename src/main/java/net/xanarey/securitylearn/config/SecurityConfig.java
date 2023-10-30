@@ -4,6 +4,7 @@ import net.xanarey.securitylearn.model.Permission;
 import net.xanarey.securitylearn.model.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -15,6 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Bean
@@ -45,8 +47,8 @@ public class SecurityConfig {
                         {
                             try {
                                 authorizeRequests
-                                        .requestMatchers("/admin").hasAuthority(Permission.DEV_ADMIN.getPermission())
-                                        .requestMatchers("/user").hasAuthority(Permission.DEV_USER.getPermission())
+//                                        .requestMatchers("/admin").hasAuthority(Permission.DEV_ADMIN.getPermission())
+//                                        .requestMatchers("/user").hasAuthority(Permission.DEV_USER.getPermission())
                                         .anyRequest().authenticated()
                                         .and().httpBasic();
                             } catch (Exception e) {
