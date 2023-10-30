@@ -1,5 +1,6 @@
 package net.xanarey.securitylearn.config;
 
+import net.xanarey.securitylearn.model.Permission;
 import net.xanarey.securitylearn.model.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,12 +23,12 @@ public class SecurityConfig {
                 User.builder()
                         .username("admin")
                         .password(passwordEncoder().encode("admin"))
-                        .roles(Role.ADMIN.name())
+                        .authorities(Role.ADMIN.getAuthorities())
                         .build(),
                 User.builder()
                         .username("user")
                         .password(passwordEncoder().encode("user"))
-                        .roles(Role.USER.name())
+                        .authorities(Role.USER.getAuthorities())
                         .build()
         );
     }
@@ -44,8 +45,8 @@ public class SecurityConfig {
                         {
                             try {
                                 authorizeRequests
-                                        .requestMatchers("/admin").hasRole(Role.ADMIN.name())
-                                        .requestMatchers("/user").hasRole(Role.USER.name())
+                                        .requestMatchers("/admin").hasAuthority(Permission.DEV_ADMIN.getPermission())
+                                        .requestMatchers("/user").hasAuthority(Permission.DEV_USER.getPermission())
                                         .anyRequest().authenticated()
                                         .and().httpBasic();
                             } catch (Exception e) {
