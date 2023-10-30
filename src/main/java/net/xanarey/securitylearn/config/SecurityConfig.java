@@ -1,6 +1,5 @@
 package net.xanarey.securitylearn.config;
 
-import net.xanarey.securitylearn.model.Permission;
 import net.xanarey.securitylearn.model.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
