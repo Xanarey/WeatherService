@@ -1,5 +1,6 @@
 package net.xanarey.securitylearn.service;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -8,9 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 @Slf4j
 @Service
@@ -22,10 +21,19 @@ public class WeatherService {
     private final RestTemplate restTemplate;
     @Getter
     private final ExecutorService executorService = Executors.newCachedThreadPool();
+    private final ScheduledExecutorService scheduledExecutorService;
 
     @Autowired
-    public WeatherService(RestTemplate restTemplate) {
+    public WeatherService(RestTemplate restTemplate, ScheduledExecutorService scheduledExecutorService) {
         this.restTemplate = restTemplate;
+        this.scheduledExecutorService = scheduledExecutorService;
+    }
+
+    @PostConstruct
+    public void startWeatherUpdates() {
+        scheduledExecutorService.scheduleAtFixedRate(() -> {
+            getWeatherByCity("Moscow");
+        }, 0, 1, TimeUnit.MINUTES);
     }
 
     public CompletableFuture<String> getWeatherByCity(String city) {
