@@ -21,19 +21,10 @@ public class WeatherService {
     private final RestTemplate restTemplate;
     @Getter
     private final ExecutorService executorService = Executors.newCachedThreadPool();
-    private final ScheduledExecutorService scheduledExecutorService;
 
     @Autowired
-    public WeatherService(RestTemplate restTemplate, ScheduledExecutorService scheduledExecutorService) {
+    public WeatherService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
-        this.scheduledExecutorService = scheduledExecutorService;
-    }
-
-    @PostConstruct
-    public void startWeatherUpdates() {
-        scheduledExecutorService.scheduleAtFixedRate(() -> {
-            getWeatherByCity("Moscow");
-        }, 0, 1, TimeUnit.MINUTES);
     }
 
     public CompletableFuture<String> getWeatherByCity(String city) {
