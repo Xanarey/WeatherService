@@ -29,13 +29,13 @@ public class WeatherService {
 
     public CompletableFuture<String> getWeatherByCity(String city) {
         log.info("--------------------------------------------------------");
-        log.info("Request thread: " + Thread.currentThread().getName());
+        log.info("Request thread: {}", Thread.currentThread().getName());
         log.info("Handling weather request for city: {}", city);
         return CompletableFuture.supplyAsync(() -> {
             try {
                 String response = restTemplate.getForObject(WEATHER_URL, String.class, city, apiKey);
                 log.info("Weather data received successfully for city: {}", city);
-                log.info("Async thread: " + Thread.currentThread().getName());
+                log.info("Async thread: {}", Thread.currentThread().getName());
                 log.info("--------------------------------------------------------");
                 return response;
             } catch (Exception e) {
