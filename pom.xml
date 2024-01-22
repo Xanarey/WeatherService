@@ -12,8 +12,8 @@
     <artifactId>SecurityLearn</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>SecurityLearn</name>
-    <description>SecurityLearn</description>
+    <name>WeatherService</name>
+    <description>WeatherService</description>
     <properties>
         <java.version>17</java.version>
     </properties>
