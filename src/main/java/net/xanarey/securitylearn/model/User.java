@@ -39,4 +39,8 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     @Column(name = "role")
     private Role role;
+
+    @Column(name = "notification_enabled")
+    private boolean notificationEnabled;
 }
+
